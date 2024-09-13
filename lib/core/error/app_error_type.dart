@@ -1,0 +1,4 @@
+enum AppErrorType {
+  dynamic,
+  network
+}
