@@ -5,6 +5,12 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace = "com.iy.cleanbasearc"
     compileSdk = flutter.compileSdkVersion
@@ -30,11 +36,33 @@ android {
         versionName = flutter.versionName
     }
 
-    buildTypes {
+    signingConfigs {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            def keystoreFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            if (keystoreFile == null) {
+                throw new GradleException("Keystore file not found. Please ensure you have a valid keystore path.")
+                /*
+                Create key.properties in android folder
+                storePassword=ilker123
+                keyPassword=ilker123
+                keyAlias=key0
+                storeFile=/signing/keystore.jks
+                */
+            }
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreFile
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // Release build with proper signing configuration
+            signingConfig signingConfigs.release
         }
     }
 }
