@@ -19,20 +19,18 @@ class _ExerciseScreenState extends BaseScreen<ExerciseScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget buildBody() {
     return Center(
-      child: Text(
-          'Welcome to Exercise Screen ${AppTexts.instance.an_error_occured}'),
+      child: Text('Welcome $screenTitle'),
     );
   }
 
   @override
-  List<BlocListener> additionalListeners() {
+  List<BlocListener> screenListeners() {
     return [
       BlocListener<ExerciseBloc, ExerciseState>(
         listener: (context, state) {
@@ -54,6 +52,7 @@ class _ExerciseScreenState extends BaseScreen<ExerciseScreen> {
     setState(() {
       a++;
     });
+    print(AppTexts.instance.an_error_occured);
     print('AppBar icon pressed in ExerciseScreen');
   }
 
@@ -63,8 +62,11 @@ class _ExerciseScreenState extends BaseScreen<ExerciseScreen> {
   }
 
   @override
-  bool get hasAppBar => false;
+  String get screenTitle => AppTexts.instance.screen_name_exercise;
 
   @override
-  bool get hasFloatingActionButton => false;
+  bool get hasAppBar => true;
+
+  @override
+  bool get hasFloatingActionButton => true;
 }

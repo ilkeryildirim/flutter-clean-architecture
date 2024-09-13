@@ -7,20 +7,22 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
 
   bool get hasFloatingActionButton => true;
 
+  String get screenTitle => "New Screen";
+
   void onAppBarIconPressed() {}
 
   void onFloatingActionButtonPressed() {}
 
   void onAppStateChanged(AppState state) {}
 
-  List<BlocListener> additionalListeners() {
+  List<BlocListener> screenListeners() {
     return [];
   }
 
   PreferredSizeWidget? buildAppBar() {
     if (hasAppBar) {
       return AppBar(
-        title: Text('App Title'),
+        title: Text(screenTitle),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
@@ -55,7 +57,7 @@ abstract class BaseScreen<T extends StatefulWidget> extends State<T> {
             onAppStateChanged(state);
           },
         ),
-        ...additionalListeners(),
+        ...screenListeners(),
       ],
       child: Scaffold(
         appBar: buildAppBar(),

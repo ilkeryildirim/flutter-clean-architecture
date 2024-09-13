@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildTree();
+    return buildTree(context);
   }
 
-  Widget buildTree() {
+  Widget buildTree(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppBloc>(
@@ -49,6 +49,9 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: ExerciseScreen(),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
       ),
     );
   }
