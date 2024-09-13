@@ -12,7 +12,6 @@ void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   BaseInjector.init();
-  ExerciseInjector.init();
 
   runApp(
     EasyLocalization(

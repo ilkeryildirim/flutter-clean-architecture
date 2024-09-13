@@ -5,9 +5,7 @@ import 'exercise_datasource_injector.dart';
 import 'exercise_repository_injector.dart';
 
 abstract class ExerciseInjector {
-  static final GetIt sl = GetIt.instance;
-
-  static void init() {
+  static void init(GetIt sl) {
     ExerciseDataSourceInjector.init(sl);
     ExerciseRepositoryInjector.init(sl);
     ExerciseBlocInjector.init(sl);
