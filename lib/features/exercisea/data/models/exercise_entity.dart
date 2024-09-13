@@ -1,24 +1,24 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'exercise_model.g.dart';
+part 'exercise_entity.g.dart';
 
 @JsonSerializable()
-class ExerciseModel {
+class ExerciseEntity {
   String id;
   String title;
   int timeInSeconds;
   int calorie;
   String imageUrl;
 
-  ExerciseModel(
+  ExerciseEntity(
       {required this.id,
       required this.title,
       required this.timeInSeconds,
       required this.calorie,
       required this.imageUrl});
 
-  factory ExerciseModel.fromJson(Map<String, dynamic> json) =>
-      _$ExerciseModelFromJson(json);
+  factory ExerciseEntity.fromJson(Map<String, dynamic> json) =>
+      _$ExerciseEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ExerciseModelToJson(this);
+  Map<String, dynamic> toJson() => _$ExerciseEntityToJson(this);
 }

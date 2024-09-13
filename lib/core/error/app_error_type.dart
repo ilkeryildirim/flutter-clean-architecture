@@ -1,4 +1,1 @@
-enum AppErrorType {
-  dynamic,
-  network
-}
+enum AppErrorType { api, dynamic, network }

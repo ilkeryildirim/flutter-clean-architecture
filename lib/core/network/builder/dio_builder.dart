@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../interceptor/error_interceptor.dart';
 import '../interceptor/header_interceptor.dart';
@@ -22,7 +23,8 @@ class DioBuilder extends DioMixin implements Dio {
 
     this.options = options;
     if (kDebugMode) {
-      interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+      interceptors.add(PrettyDioLogger(
+          responseBody: true, requestBody: true, requestHeader: true));
     }
 
     interceptors.add(HeaderInterceptor());

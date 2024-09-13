@@ -44,6 +44,7 @@ dependencies:
   shimmer: ^3.0.0
   easy_localization: ^3.0.7
   json_annotation: ^4.9.0
+  pretty_dio_logger: ^1.4.0
 
 flutter_gen:
   integrations:

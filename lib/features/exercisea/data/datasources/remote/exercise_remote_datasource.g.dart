@@ -11,20 +11,23 @@ part of 'exercise_remote_datasource.dart';
 class _ExercisesRemoteDataSource implements ExercisesRemoteDataSource {
   _ExercisesRemoteDataSource(
     this._dio, {
-    this.baseUrl
+    this.baseUrl,
+    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
 
+  final ParseErrorLogger? errorLogger;
+
   @override
-  Future<dynamic> getPopularExercises() async {
+  Future<ExerciseEntity> getPopularExercises() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<dynamic>(Options(
+    final _options = _setStreamType<ExerciseEntity>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -40,8 +43,14 @@ class _ExercisesRemoteDataSource implements ExercisesRemoteDataSource {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ExerciseEntity _value;
+    try {
+      _value = ExerciseEntity.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 

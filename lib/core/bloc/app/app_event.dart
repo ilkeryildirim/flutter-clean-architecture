@@ -5,7 +5,7 @@ abstract class AppEvent {}
 class EventAppInitialized extends AppEvent {}
 
 class EventAppFailed extends AppEvent {
-  final AppError error;
+  final AppLocalizedError error;
 
   EventAppFailed({required this.error});
 }

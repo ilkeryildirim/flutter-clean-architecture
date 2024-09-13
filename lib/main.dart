@@ -1,13 +1,27 @@
 import 'package:cleanbasearc/core/injector/base_injector.dart';
-import 'package:cleanbasearc/features/home/home_screen.dart';
+import 'package:cleanbasearc/features/exercisea/injector/exercise_injector.dart';
+import 'package:cleanbasearc/features/exercisea/presentation/bloc/exercise_bloc.dart';
+import 'package:cleanbasearc/features/exercisea/presentation/widgets/exercise_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/bloc/app/app_bloc.dart';
 
-void main() {
+void main() async {
+  await WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   BaseInjector.init();
-  runApp(const MyApp());
+  ExerciseInjector.init();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('tr')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +38,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<AppBloc>(
           create: (_) => BaseInjector.sl<AppBloc>(),
         ),
+        BlocProvider<ExerciseBloc>(
+          create: (_) => BaseInjector.sl<ExerciseBloc>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -31,7 +48,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: HomeScreen(),
+        home: ExerciseScreen(),
       ),
     );
   }

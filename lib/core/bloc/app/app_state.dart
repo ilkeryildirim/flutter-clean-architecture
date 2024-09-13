@@ -13,7 +13,7 @@ class LoadingState extends AppState {
 }
 
 class StateError extends AppState {
-  final AppError error;
+  final AppLocalizedError error;
 
   StateError({required this.error});
 }
