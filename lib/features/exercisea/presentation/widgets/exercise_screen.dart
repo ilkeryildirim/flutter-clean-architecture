@@ -1,10 +1,14 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:cleanbasearc/core/helpers/app_navigator.dart';
 import 'package:cleanbasearc/features/exercisea/presentation/bloc/exercise_event.dart';
 import 'package:cleanbasearc/shared/constants/app_texts.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../core/widgets/base/base_screen.dart';
+import '../../../../shared/constants/app_colors.dart';
 import '../bloc/exercise_bloc.dart';
 import '../bloc/exercise_state.dart';
 
@@ -24,8 +28,41 @@ class _ExerciseScreenState extends BaseScreen<ExerciseScreen> {
 
   @override
   Widget buildBody() {
+    final isDarkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
+
     return Center(
-      child: Text('Welcome $screenTitle'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              context.setLocale(Locale("en"));
+            },
+            child: Text(AppTexts.instance.english),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.setLocale(Locale("tr"));
+            },
+            child: Text(AppTexts.instance.turkish),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              if (isDarkMode) {
+                AdaptiveTheme.of(context).setLight();
+              } else {
+                AdaptiveTheme.of(context).setDark();
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: AppColors.getButtonTextColor(context),
+              backgroundColor: AppColors.getBackgroundColor(context),
+            ),
+            child: Text(AppTexts.instance.change_theme),
+          ),
+        ],
+      ),
     );
   }
 
@@ -53,6 +90,7 @@ class _ExerciseScreenState extends BaseScreen<ExerciseScreen> {
       a++;
     });
     print(AppTexts.instance.an_error_occured);
+    AppNavigator.push(context, screen: ExerciseScreen());
     print('AppBar icon pressed in ExerciseScreen');
   }
 

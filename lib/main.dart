@@ -1,5 +1,5 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cleanbasearc/core/injector/base_injector.dart';
-import 'package:cleanbasearc/features/exercisea/injector/exercise_injector.dart';
 import 'package:cleanbasearc/features/exercisea/presentation/bloc/exercise_bloc.dart';
 import 'package:cleanbasearc/features/exercisea/presentation/widgets/exercise_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -11,6 +11,7 @@ import 'core/bloc/app/app_bloc.dart';
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  final savedThemeMode = await AdaptiveTheme.getThemeMode();
   BaseInjector.init();
 
   runApp(
@@ -18,13 +19,16 @@ void main() async {
       supportedLocales: const [Locale('en'), Locale('tr')],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
-      child: const MyApp(),
+      child: MyApp(
+          savedThemeMode: savedThemeMode), // Kaydedilen tema modunu geçiriyoruz
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AdaptiveThemeMode? savedThemeMode;
+
+  const MyApp({Key? key, this.savedThemeMode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +45,33 @@ class MyApp extends StatelessWidget {
           create: (_) => BaseInjector.sl<ExerciseBloc>(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      child: AdaptiveTheme(
+        light: ThemeData(
+          brightness: Brightness.light, // Tema için açık mod
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+            brightness: Brightness.light, // ColorScheme de açık modda
+          ),
           useMaterial3: true,
         ),
-        home: ExerciseScreen(),
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
+        dark: ThemeData(
+          brightness: Brightness.dark,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+            brightness: Brightness.dark,
+          ),
+          useMaterial3: true,
+        ),
+        initial: savedThemeMode ?? AdaptiveThemeMode.light,
+        builder: (theme, darkTheme) => MaterialApp(
+          title: 'Flutter Demo',
+          theme: theme,
+          darkTheme: darkTheme,
+          home: ExerciseScreen(),
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+        ),
       ),
     );
   }

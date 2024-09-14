@@ -1,5 +1,8 @@
 {
   "app_name": "Clean Arc",
   "an_error_occured": "An Error Occured",
-  "screen_exercise": "Exercise Screen"
+  "screen_exercise": "Exercise Screen",
+  "turkish": "Turkish",
+  "english": "English",
+  "change_theme": "Change Theme"
 }

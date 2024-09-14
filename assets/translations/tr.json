@@ -1,5 +1,8 @@
 {
   "app_name": "Clean Arc",
   "an_error_occured": "Bilinmeyen bir hata oluştu!",
-  "screen_exercise": "Egsersiz Ekranı"
+  "screen_exercise": "Egsersiz Ekranı",
+  "turkish": "Türkçe",
+  "english": "İngilizce",
+  "change_theme": "Temayı Değiştir"
 }

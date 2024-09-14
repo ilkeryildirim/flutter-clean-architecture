@@ -45,6 +45,8 @@ dependencies:
   easy_localization: ^3.0.7
   json_annotation: ^4.9.0
   pretty_dio_logger: ^1.4.0
+  page_transition: ^2.1.0
+  adaptive_theme: ^3.6.0
 
 flutter_gen:
   integrations:
